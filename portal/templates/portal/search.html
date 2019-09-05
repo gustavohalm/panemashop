@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+
+{%block title %} {{request.GET.q}} - PanemaShop{% endblock%}
+
+{%block content %}
+    <div class="container">
+
+<br>
+        <div class="row">
+            <div class="col-sm-12 text-center">
+                <h4>Resultado de: {{request.GET.q}}</h4>
+            </div>
+        </div>
+<br>
+        <div class="row">
+
+            <div class="col-sm-12 col-md-3 col-lg-3">
+                <ul class="list-group">
+                    <li >Categorias</li>
+                    {% for category in categories %}
+                        <li> <a href="category/{{category.slug}}" class="itens-category"> {{category.name}} </a></li>
+                        <li>
+                            <ul class="sub-list">
+                                {%for subcategory in category.cat_child.all%}
+                                    <li > <a href="categoria/{{subcategory.slug}}" class="itens-category"> {{subcategory.name}} </a> </li>
+                                {%endfor%}
+                            </ul>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="col-sm-12 col-md-9 col-lg-9">
+                    <div class="container">
+                        {%if results.hits %}
+                            {%for result in results.hits%}
+    <br>                       <div class="row">
+                                    <div class="col-sm-6 col-md-6 col-lg-6">
+                                        <a href="{% url 'product_detail' slug=result.slug%}">
+                                            <img src="img/img.png" >
+                                        </a>
+                                    </div>
+                                    <div class="col-sm-6 col-md-6 col-lg-6">
+
+                                        <h3> <a href="{% url 'product_detail' slug=result.slug %}"> {{result.name}} </a></h3>
+                                          <article>
+                                              <p>{{result.short_description}}</p>
+                                          </article>
+                                        <p>
+                                            R${{result.price }}
+                                        </p>
+                                    </div>
+                                </div>
+                            {%endfor%}
+                            {%if results.nbPages > 0 %}
+                                {% if results.page > 0  %}
+                                    <a href="?q={{results.query}}&page={{previous_page}}" ><< </a>
+                                {% endif%}
+                                {% for i in nPages %}
+                                    {% if i == results.page  %}
+                                        <a href="?q={{results.query}}&page={{i}}" style="font-weight:bold;"> {{ i }}</a>
+                                    {%else%}
+                                        <a href="?q={{results.query}}&page={{i}}"> {{ i }}</a>
+                                    {% endif %}
+                                {% endfor %}
+                                {%if results.page < results.nbPages %}
+                                    <a href="?q={{results.query}}&page={{next_page}}" >>></a>
+                                {%endif%}
+                            {%endif%}
+                        {% elif request.GET.categoria %}
+                            {%for product in results%}
+                                <div class="row">
+                                    <div class="col-sm-6 col-md-6 col-lg-6">
+                                        <a href="{% url 'product_detail' slug=product.slug%}">
+                                            <img src="img/img.png" >
+                                        </a>
+                                    </div>
+                                    <div class="col-sm-6 col-md-6 col-lg-6">
+
+                                        <h3> <a href="{% url 'product_detail' slug=product.slug %}"> {{product.name}} </a></h3>
+                                          <article>
+                                              <p>{{product.short_description}}</p>
+                                          </article>
+                                        <p>
+                                            R${{product.price }}
+                                        </p>
+                                    </div>
+                                </div>
+                            {%endfor%}
+                            {%if results.has_previous%}
+                                <a href="?categoria={{request.GET.categoria}}&page={{results.previous_page_number}}" > << </a>
+                            {%endif%}
+                            {%if results.has_next%}
+                                <a href="?categoria={{request.GET.categoria}}&page={{results.next_page_number}}" > >> </a>
+                            {%endif%}
+                        {%else%}
+                            <div>
+                                <h4> Não há parametros para buscar </h4>
+                            </div>
+                        {%endif%}
+
+
+
+                    </div>
+            </div>
+        </div>
+
+
+    </div>
+{%endblock%}

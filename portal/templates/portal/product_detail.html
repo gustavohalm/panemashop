@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+
+{%block title %} {{product.name}} - PanemaShop{% endblock%}
+
+{%block content %}
+    <div class="container">
+        <div class="row"><br>
+                <div class="col-sm-12 col-md-6">
+                    <div class="product-image">
+                        <img src="img/img.jpg">
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <p class="panema-description"> {{product.name}} </p>
+                    <br>
+                    <p>{{product.short_description}}</p>
+                    <br><p>Quantidade: {{product.quantity}}</p>
+                    <br>
+                    <p>
+                        Preço: R${{product.price}}
+                    </p>
+                    <div class="form-billing">
+                        <form method="GET" action="{% url 'payment' slug=product.slug %}" >
+                            <input type="submit" class="btn btn-primary" value="COMPRAR"  STYLE="border:none;">
+                        </form>
+                    </div>
+                </div>
+        </div>
+        <div class="row"><br><br>
+            <div class="col-sm-12">
+                <p>{{product.description}}</p>
+                <ol class="breadcrumb">
+                    {% for category in product.categories.all %}
+                        <li> {{category.name}} </li>
+                    {% endfor %}
+                   <li> {{product.category}} </li>
+                </ol>
+            </div>
+        </div>
+        <div class="row text-center">
+            <div class="col-sm-12 col-md-12">
+              <h1 style="font-size: 2.5vh">Perguntas e Respostas</h1>
+            </div>
+        </div>
+        <div class="row text-center">
+            <div class="col-sm-12 col-md-12">
+                {% for question in product.questions.all %}
+                    <div class="container questions">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-12" question><br>
+                                <p style="text-align:left">{{question.user.first_name}} {{question.user.last_name}}  </p>
+                                <p style="text-align:left">{{question.question}}</p>
+                            </div>
+
+                        </div>
+                        <div class="row " style="padding=20px;">
+                            {%for answer in question.answers.all%}
+                                <div class="col-sm-12 col-md-12">
+                                    <p> {{answer.user.first_name }} {{answer.user.last_name}}</p>
+                                    <p> {{answer.answer}}</p>
+                                </div>
+                            {%empty%}
+                                <div class="col-sm-12 col-md-12">
+                                    <h5>Pergunta ainda não foi respondida</h5>
+                                </div>
+                            {%endfor%}
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 col-md-12">
+                                <!--FORMULÁRIO DE RESPOSTAS -->
+                                <div>
+                                    <h6>Responda</h6>
+                                </div>
+                                <div class="form-answer">
+                                    <form action="{% url 'question_answer' slug=product.slug pk=question.id%}" method="post">
+                                        {%csrf_token%}
+                                        <input class="form-control input-answer" type="text" name="answer">
+                                        <input type="submit" value="RESPONDER" class="btn btn-success" >
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                {%empty%}
+                    <h1 style="font-size: 2vh">Ainda não há Perguntas para esses produto. Faça a primeira!</h1>
+                {% endfor %}
+            </div>
+        </div>
+<br><br>
+        <div class="row">
+            <div class="col-sm-12 col-md-12">
+                  <!--FORMULÁRIO DE Perguntas -->
+
+                    <div class="form-question">
+                        <form action=" {% url 'product_question' slug=product.slug %} " method="post">
+                            {%csrf_token%}
+                            <input type="text" class="form-control comment-form" name="question">
+                          <br>  <input type="submit" value="COMENTAR" class="btn btn-success">
+                        </form>
+                    </div>
+            </div>
+        </div>
+    </div>
+{%endblock%}
+
+

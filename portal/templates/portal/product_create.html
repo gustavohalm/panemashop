@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{%block title %} Novo Produto - PanemaShop{% endblock%}
+
+{%block content %}
+<div class="container">
+    <div class="row text-center">
+        <h3 class="panema-description">Adicione um produto para vender! <br>Simples. Fácil. Rápido.</h3>
+    </div>
+    <div class="row text-center">
+        <form method="post" class="form form_control">
+            {%csrf_token%}
+            {{form.as_p}}
+            <input type="submit" class="btn btn-primary" value="VENDER">
+        </form>
+    </div>
+</div>
+
+
+{%endblock%}
+
+

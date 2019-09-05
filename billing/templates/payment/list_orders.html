@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{%block title %} Comprar product.name -PanemaShop{% endblock%}
+
+{%block content %}
+
+
+<div class="container">
+    <div class="row">
+
+        <table class="table">
+            <tr>
+                <th> Código</th>
+                <th> Produto</th>
+                <th> Comprador</th>
+                <th> Status</th>
+                <th> Status de Entrega</th>
+                <th> Comissão</th>
+                <th> Valor</th>
+                <th> Ação</th>
+            </tr>
+
+            {%for order in order_list%}
+                    <tr>
+                        <th>{{order}}</th>
+                        <th>{{order.product.name}}</th>
+                        <th>{{order.user.first_name}}  {{order.user.last_name}}</th>
+                        <th>{{order.status}}</th>
+                        <th>{{order.shipment}}</th>
+                        <th>{{order.commission}}</th>
+                        <th>{{order.total}}</th>
+                        <th><a class="btn btn-primary" href="{% url 'sales_update' pk=order.id %}">EDITAR</a></th>
+                    </tr>
+
+            {%empty%}
+            <tr>
+                <th>
+                    Você ainda não realizou vendas. Anuncie ou edite seus itens.
+                </th>
+            </tr>
+            {%endfor%}
+        </table>
+
+    </div>
+</div>
+
+
+{%endblock%}

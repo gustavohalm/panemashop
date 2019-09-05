@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% load staticfiles %}
+{% load static %}
+{%block title %} Home - PanemaShop{% endblock%}
+
+{%block content %}
+    <div class="container">
+        <div class="row text-center">
+            <h1 class="panema-description">PanemaShop - Compre de tudo por aqui.</h1>
+        </div>
+        <div class="col-sm-12 col-md-2 col-lg-2">
+                <ul class="list-group">
+                    <li >Categorias</li>
+                    {% for category in categories %}
+                        <li> <a href="buscar/?categoria={{category.slug}}" class="itens-category"> {{category.name}} </a></li>
+                        <li>
+                            <ul class="sub-list">
+                                {%for subcategory in category.cat_child.all%}
+                                    <li > <a href="buscar/?categoria={{subcategory.slug}}" class="itens-category"> {{subcategory.name}} </a> </li>
+                                {%endfor%}
+                            </ul>
+                        </li>
+                    {% endfor %}
+                </ul>
+        </div>
+        <!-- list of products -->
+        <div class="col-sm-12 col-md-10 col-lg-10">
+            <div class="container">
+                <div class="row">
+                    {% for product in leasts%}
+                        <div class="col-sm-6 col-md-2 col-lg-2 product-item ">
+                            <div class="text-center"><br>
+                                <img src="{% static 'img/img.jpg' %}" style="max-height: 200px; max-width: 200px;"><br>
+                                <a href="{% url 'product_detail' slug=product.slug %}" >{{product.name}}</a>
+                                <h6>R$ {{product.price}}</h6>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="container">
+                            {%for category in categories %}
+                            {% for subcategory in category.cat_child.all %}
+                                    <h4>{{subcategory.name}}:</h4>
+                                    {%for product in subcategory.products %}
+                                        <div class="product-item text-center"><br>
+                                            <img src="{% static 'img/01.jpg' %}" style="max-height: 250px; max-width: 250px;" ><br>
+                                            <a href="{% url 'product_detail' slug=product.slug %}" >{{product.name}}</a>
+                                            <h6>R$ {{product.price}}</h6>
+                                        </div>
+                                    {%endfor%}
+                            {% endfor %}
+                            {%endfor%}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{%endblock%}
+
+

@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load static %}
+{%block title %} Comprar product.name -PanemaShop{% endblock%}
+
+{%block content %}
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 col-md-12 text-center">
+            <br>
+            <h1>{{message}}</h1>
+            <br>
+            <br>
+            <form method="post"  class="form-control">
+                {%csrf_token%}
+                {{form.as_p}}
+                <input type="submit" value="Finalizar compra" class="btn btn-success">
+            </form>
+        </div>
+    </div>
+</div>
+
+
+{%endblock%}

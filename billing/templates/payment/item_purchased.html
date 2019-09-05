@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load static %}
+{%block title %} Comprar product.name -PanemaShop{% endblock%}
+
+{%block content %}
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 col-md-12 text-center">
+            <div>
+                <h1> Compra do {{order.product.name}} realizada com sucess! </h1>
+                <br>
+                <br>
+                <ul class="list-group">
+                    <li class="list-group-item"> Serviço: #{{order.id}} </li>
+                    <li class="list-group-item"> Valor: R${{order.total}} </li>
+                    <li class="list-group-item"> Vendedor: {{order.merchant}} </li>
+                    <li class="list-group-item"> Status: Aprovado </li>
+                    <li class="list-group-item">
+                        {%if order.shipment  == 'Pending'%}
+                           Entrega Pendente
+
+                        {%endif%}
+                    </li>
+
+
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{%endblock%}

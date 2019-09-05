@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{%block title %} Meus Produtos - PanemaShop{% endblock%}
+
+{%block content %}
+    <div class="container">
+        <div class="row text-center">
+            <h1 class="panema-description">PanemaShop - Compre de tudo por aqui.</h1>
+        </div>
+
+        <!-- list of products -->
+        <div class="row ">
+            <div class="col-sm-12">
+                <div class="container">
+                    <div class="row text-center">
+                        <a class="btn btn-primary" href="{% url 'new_product' %}"> Novo Produto</a>
+                        <br>
+                        <br>
+                    </div>
+                    <div class="row">
+
+                        <table class="table table_bordred">
+                            <tr>
+                                <th>Código</th>
+                                <th>Nome</th>
+                                <th>Status</th>
+                                <th>Ação</th>
+                            </tr>
+                            {% for product in product_list %}
+                             <tr>
+                                <td>{{product.id}}</td>
+                                <td>{{product.name}}</td>
+                                <td>{{product.status}}</td>
+                                <td><a href="{% url 'update_product' pk=product.id %} " class="btn btn-primary">editar</a></td>
+                             </tr>
+                             {% empty %}
+                             <tr>   <h2 class="panema-description">Você ainda não tem produtos a Venda.</h2></tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+{%endblock%}
+
+

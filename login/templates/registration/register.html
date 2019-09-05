@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{%block title %} Cadastro - PanemaShop{% endblock%}
+
+{%block content %}
+    <div class="container">
+        <div class="row text-center">
+            <h1 class="panema-description">Cadastre-se. Compre. Venda. Tudo em um só lugar - PanemaShop.</h1>
+        </div>
+
+        <div class="row text-center">
+            <div class="col-sm-12 col-md-9 col-lg-9">
+                <div class="form">
+                    <div style="padding:10px;"> <span style="color:red;"> {{error}}</span> </div>
+                    <form method="post" >
+                        {% csrf_token%}
+                        {{form.as_p}}
+                        <input type="submit" value="CADASTRAR" class='btn btn-primary' />
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dados Cadastrais -->
+    </div>
+{%endblock%}
+
+

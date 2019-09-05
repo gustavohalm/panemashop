@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{%block title %} Comprar product.name -PanemaShop{% endblock%}
+
+{%block content %}
+
+
+<div class="container">
+    <div class="row">
+
+        <table class="table">
+            <tr>
+                <th> Código</th>
+                <th> Produto</th>
+                <th> Vendedor</th>
+                <th> Status</th>
+                <th> Status de Entrega</th>
+                <th> Valor</th>
+
+            </tr>
+
+            {%for order in order_list%}
+                    <tr>
+                        <th>{{order}}</th>
+                        <th>{{order.product.name}}</th>
+                        <th>{{order.merchant.first_name}}  {{order.user.last_name}}</th>
+                        <th>{{order.status}}</th>
+                        <th>{{order.shipment}}</th>
+                        <th>{{order.total}}</th>
+                    </tr>
+
+            {%empty%}
+            <tr>
+                <th>
+                    Você ainda não realizou compras. Procure por itens, temos uma enorme variedade de produtos e preços.
+                </th>
+            </tr>
+            {%endfor%}
+        </table>
+
+    </div>
+</div>
+
+
+{%endblock%}
